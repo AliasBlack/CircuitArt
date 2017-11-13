@@ -5,13 +5,13 @@
     "name": "Renderer",
     "eventList": [
         {
-            "id": "ef221d1e-0c2b-4e42-b1c3-9c9d33b3a990",
+            "id": "8a50b4df-e80b-43ec-82d6-075053848a92",
             "modelName": "GMEvent",
             "mvc": "1.0",
             "IsDnD": false,
             "collisionObjectId": "00000000-0000-0000-0000-000000000000",
             "enumb": 0,
-            "eventtype": 0,
+            "eventtype": 8,
             "m_owner": "2098ca37-7195-42fe-93b7-d8020469cf3a"
         }
     ],
