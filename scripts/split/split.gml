@@ -9,7 +9,7 @@ for (i = 1; i <= string_length(argument0); i++) {
 			lastComma = i + 1;
 		}
 	} else {
-		array[array_length_1d(array)] = string_copy(argument0, lastComma, i - lastComma);
+		array[array_length_1d(array)] = string_copy(argument0, lastComma, i - lastComma + 1);
 	}
 }
 return array;
