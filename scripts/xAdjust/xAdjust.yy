@@ -1,8 +1,8 @@
 {
-    "id": "155f5216-cb10-4e8b-9d2a-85059445bc1a",
+    "id": "3066f803-eaae-40b2-b2d5-ecd09e37e453",
     "modelName": "GMScript",
     "mvc": "1.0",
-    "name": "split",
+    "name": "xAdjust",
     "IsCompatibility": false,
     "IsDnD": false
 }

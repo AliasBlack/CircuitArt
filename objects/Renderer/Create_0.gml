@@ -1,0 +1,15 @@
+markerx = 0;
+markery = 0;
+currentUnit = 50;
+currentScale = 1;
+minScale = 0.3;
+maxScale = 3;
+currentXOffset = 0;
+currentYOffset = 0;
+lastXOffset = 0;
+lastYOffset = 0;
+lastMouseX = 0;
+lastMouseY = 0;
+tempColor = 2658491;
+tempAlpha = 80;
+tempArguments = ds_list_create();
