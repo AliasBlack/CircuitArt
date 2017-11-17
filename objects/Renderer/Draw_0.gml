@@ -3,22 +3,14 @@ draw_set_alpha(0.3);
 draw_set_color(c_white);
 for (gridX = 0; gridX < room_width; gridX += currentUnit) {
 	for (gridY = 0; gridY < room_height; gridY += currentUnit) {
-		draw_point(
-			gridX * currentScale + currentXOffset,
-			gridY * currentScale + currentYOffset
-		);
+		draw_point(xAdjust(gridX), yAdjust(gridY));
 	}
 }
 
 // Render marker.
 markerx = round(((mouse_x - currentXOffset) / currentScale) / currentUnit) * currentUnit;
 markery = round(((mouse_y - currentYOffset) / currentScale) / currentUnit) * currentUnit;
-draw_circle (
-	markerx * currentScale + currentXOffset,
-	markery * currentScale + currentYOffset,
-	20 * currentScale,
-	true
-);
+draw_circle (xAdjust(markerx), yAdjust(markery), 20 * currentScale, true);
 
 // Render drawing.
 for (ind = 0; ind < ds_list_size(global.instructions); ind++) {
@@ -30,10 +22,10 @@ for (ind = 0; ind < ds_list_size(global.instructions); ind++) {
 			draw_set_color(arguments[0]);
 			draw_set_alpha(arguments[1]/100);
 			draw_line (
-				arguments[2] * currentScale + currentXOffset,
-				arguments[3] * currentScale + currentYOffset,
-				arguments[4] * currentScale + currentXOffset,
-				arguments[5] * currentScale + currentYOffset
+				xAdjust(arguments[2]),
+				yAdjust(arguments[3]),
+				xAdjust(arguments[4]),
+				yAdjust(arguments[5])
 			);
 		break;
 			
@@ -67,6 +59,38 @@ for (ind = 0; ind < ds_list_size(global.instructions); ind++) {
 }
 
 // Draw brushes in progress.
-if (global.currentBrush == brush.polygon) {
-	
+switch global.currentBrush {
+	case brush.polygon:
+		if (ds_list_size(tempArguments) > 3) {
+			draw_set_color(tempColor);
+			draw_primitive_begin(pr_trianglestrip);
+			draw_set_alpha(tempAlpha/400);
+			draw_vertex (
+				xAdjust(ds_list_find_value(tempArguments, 0)),
+				yAdjust(ds_list_find_value(tempArguments, 1))
+			);
+			draw_vertex (xAdjust(markerx), yAdjust(markery));
+			vertexRev = ds_list_size(tempArguments) - 2;
+			for (pr = 2; pr < ds_list_size(tempArguments); pr += 2) {
+				draw_set_alpha(tempAlpha/400);
+				if (pr < vertexRev) {
+					draw_vertex (
+						xAdjust(ds_list_find_value(tempArguments, pr)),
+						yAdjust(ds_list_find_value(tempArguments, pr + 1))
+					);
+					draw_vertex (
+						xAdjust(ds_list_find_value(tempArguments, vertexRev)),
+						yAdjust(ds_list_find_value(tempArguments, vertexRev + 1))
+					);
+					vertexRev -= 2;
+				} else if (pr == vertexRev) {
+					draw_vertex (
+						xAdjust(ds_list_find_value(tempArguments, pr)),
+						yAdjust(ds_list_find_value(tempArguments, pr + 1))
+					);
+				}
+			}
+			draw_primitive_end();
+		}
+	break;
 }
