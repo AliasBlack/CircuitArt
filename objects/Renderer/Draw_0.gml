@@ -10,7 +10,19 @@ for (gridX = 0; gridX < room_width; gridX += currentUnit) {
 // Render marker.
 markerx = round(((mouse_x - currentXOffset) / currentScale) / currentUnit) * currentUnit;
 markery = round(((mouse_y - currentYOffset) / currentScale) / currentUnit) * currentUnit;
+if keyboard_check(vk_shift) and ds_list_size(tempArguments) > 1 {
+	xy = (abs(mouse_x - ds_list_find_value(tempArguments, ds_list_size(tempArguments) - 2)) < abs(mouse_y - ds_list_find_value(tempArguments, ds_list_size(tempArguments) - 1))) ? true : false;
+	markerx = (xy) ? ds_list_find_value(tempArguments, ds_list_size(tempArguments) - 2) : markerx;
+	markery = (xy) ? markery : ds_list_find_value(tempArguments, ds_list_size(tempArguments) - 1);
+}
 draw_circle (xAdjust(markerx), yAdjust(markery), 20 * currentScale, true);
+
+// Draw mirror.
+if mirror > 0 {
+	draw_set_color(c_white);
+	draw_set_alpha(0.5);
+	draw_line(xAdjust(mirror), yAdjust(0), xAdjust(mirror), yAdjust(room_height));
+}
 
 // Render drawing.
 for (ind = 0; ind < ds_list_size(global.instructions); ind++) {
@@ -91,6 +103,39 @@ switch global.currentBrush {
 				}
 			}
 			draw_primitive_end();
+			
+			// Draw mirror.
+			if (mirror > 0) {
+				draw_set_color(tempColor);
+				draw_primitive_begin(pr_trianglestrip);
+				draw_set_alpha(tempAlpha/400);
+				draw_vertex (
+					xAdjust(mir(ds_list_find_value(tempArguments, 0))),
+					yAdjust(ds_list_find_value(tempArguments, 1))
+				);
+				draw_vertex (xAdjust(mir(markerx)), yAdjust(markery));
+				vertexRev = ds_list_size(tempArguments) - 2;
+				for (pr = 2; pr < ds_list_size(tempArguments); pr += 2) {
+					draw_set_alpha(tempAlpha/400);
+					if (pr < vertexRev) {
+						draw_vertex (
+							xAdjust(mir(ds_list_find_value(tempArguments, pr))),
+							yAdjust(ds_list_find_value(tempArguments, pr + 1))
+						);
+						draw_vertex (
+							xAdjust(mir(ds_list_find_value(tempArguments, vertexRev))),
+							yAdjust(ds_list_find_value(tempArguments, vertexRev + 1))
+						);
+						vertexRev -= 2;
+					} else if (pr == vertexRev) {
+						draw_vertex (
+							xAdjust(mir(ds_list_find_value(tempArguments, pr))),
+							yAdjust(ds_list_find_value(tempArguments, pr + 1))
+						);
+					}
+				}
+				draw_primitive_end();
+			}
 		}
 	break;
 }

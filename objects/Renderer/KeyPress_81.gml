@@ -1,3 +1,5 @@
+lastColor2 = lastColor1;
+lastColor1 = tempColor;
 tempColor =
 	real (
 		get_string (
