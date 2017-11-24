@@ -16,3 +16,4 @@ tempArguments = ds_list_create();
 lastColor1 = c_white;
 lastColor2 = c_white;
 mirror = 0;
+mirrorJoined = true;
