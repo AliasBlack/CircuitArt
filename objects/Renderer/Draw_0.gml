@@ -79,6 +79,8 @@ for (ind = 0; ind < ds_list_size(global.instructions); ind++) {
 					draw_line_glow(arguments[pr - 4], arguments[pr - 3], arguments[pr], arguments[pr + 1]);
 				}
 			}
+			draw_line_glow(arguments[2], arguments[3], arguments[4], arguments[5]);
+			draw_line_glow(arguments[pr - 4], arguments[pr - 3], arguments[pr - 2], arguments[pr-1]);
 			draw_primitive_end();
 		break;
 	}
