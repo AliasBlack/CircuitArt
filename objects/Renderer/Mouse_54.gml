@@ -26,6 +26,5 @@ if (global.currentBrush == brush.polygon) {
 			ds_list_add(global.instructions, "draw_polygon;" + string(tempColor) + "," + string(tempAlpha) + tempString);
 		}
 	}
-	show_debug_message(tempString);
 	ds_list_clear(tempArguments);
 }
